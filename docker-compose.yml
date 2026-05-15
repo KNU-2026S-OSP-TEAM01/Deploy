@@ -1,0 +1,36 @@
+services:
+  parking-lot-frontend:
+    image: ghcr.io/knu-2026s-osp-team01/parking-lot-frontend:${FRONTEND_TAG}
+    restart: always
+    ports:
+      - "${PORT_FRONTEND}:80"
+    networks:
+      - openpark-net
+
+  parking-lot-backend:
+    image: ghcr.io/knu-2026s-osp-team01/parking-lot-backend:${BACKEND_TAG}
+    restart: always
+    env_file:
+      - .env.runtime
+    ports:
+      - "${PORT_BACKEND}:8000"
+    depends_on:
+      - postgresql
+    networks:
+      - openpark-net
+
+  postgresql:
+    image: postgres:16
+    restart: always
+    env_file:
+      - .env.runtime
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - openpark-net
+
+networks:
+  openpark-net:
+
+volumes:
+  postgres_data:
