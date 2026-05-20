@@ -3,7 +3,7 @@ services:
     image: ghcr.io/knu-2026s-osp-team01/parking-lot-frontend:${FRONTEND_TAG}
     restart: always
     ports:
-      - "${PORT_FRONTEND}:80"
+      - "${PORT_PARKING_LOT_FRONTEND}:80"
     networks:
       - openpark-net
 
@@ -13,7 +13,7 @@ services:
     env_file:
       - .env.runtime
     ports:
-      - "${PORT_BACKEND}:8000"
+      - "${PORT_PARKING_LOT_BACKEND}:8000"
     depends_on:
       - postgresql
     networks:
