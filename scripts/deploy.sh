@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-./scripts/env.sh "$TARGET_ENV"
+./scripts/env.sh
 
 docker compose \
   -p openpark \
