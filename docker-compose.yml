@@ -12,6 +12,8 @@ services:
     restart: always
     env_file:
       - .env.runtime
+    environment:
+      FRONTEND_URL: ${PARKING_LOT_FRONTEND_URL}
     ports:
       - "${PORT_PARKING_LOT_BACKEND}:8000"
     depends_on:
