@@ -3,16 +3,14 @@ set -euo pipefail
 
 ./scripts/env.sh
 
-docker compose \
-  -p openpark \
-  --env-file .env.runtime \
-  -f docker-compose.yml \
-  pull
+COMPOSE="docker compose -p openpark --env-file .env.runtime -f docker-compose.yml"
 
-docker compose \
-  -p openpark \
-  --env-file .env.runtime \
-  -f docker-compose.yml \
-  up -d --remove-orphans
+$COMPOSE pull
+
+$COMPOSE up -d postgresql
+
+$COMPOSE run --rm parking-lot-backend alembic upgrade head
+
+$COMPOSE up -d --remove-orphans
 
 docker image prune -f
