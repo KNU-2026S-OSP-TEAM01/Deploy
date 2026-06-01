@@ -1,6 +1,6 @@
 services:
   parking-lot-frontend:
-    image: ghcr.io/knu-2026s-osp-team01/parking-lot-frontend:${FRONTEND_TAG}
+    image: ghcr.io/knu-2026s-osp-team01/parking-lot-frontend:${PARKING_LOT_FRONTEND_TAG}
     restart: always
     ports:
       - "${PORT_PARKING_LOT_FRONTEND}:80"
@@ -8,7 +8,7 @@ services:
       - openpark-net
 
   parking-lot-backend:
-    image: ghcr.io/knu-2026s-osp-team01/parking-lot-backend:${BACKEND_TAG}
+    image: ghcr.io/knu-2026s-osp-team01/parking-lot-backend:${PARKING_LOT_BACKEND_TAG}
     restart: always
     env_file:
       - .env.runtime
@@ -16,6 +16,28 @@ services:
       FRONTEND_URL: ${PARKING_LOT_FRONTEND_URL}
     ports:
       - "${PORT_PARKING_LOT_BACKEND}:8000"
+    depends_on:
+      - postgresql
+    networks:
+      - openpark-net
+
+  hub-frontend:
+    image: ghcr.io/knu-2026s-osp-team01/hub-frontend:${HUB_FRONTEND_TAG}
+    restart: always
+    ports:
+      - "${PORT_HUB_FRONTEND}:80"
+    networks:
+      - openpark-net
+
+  hub-backend:
+    image: ghcr.io/knu-2026s-osp-team01/hub-backend:${HUB_BACKEND_TAG}
+    restart: always
+    env_file:
+      - .env.runtime
+    environment:
+      FRONTEND_URL: ${HUB_FRONTEND_URL}
+    ports:
+      - "${PORT_HUB_BACKEND}:8000"
     depends_on:
       - postgresql
     networks:
