@@ -37,7 +37,7 @@ services:
     environment:
       FRONTEND_URL: ${HUB_FRONTEND_URL}
     ports:
-      - "${PORT_HUB_BACKEND}:8000"
+      - "${PORT_HUB_BACKEND}:8001"
     depends_on:
       - postgresql
     networks:
